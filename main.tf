@@ -202,8 +202,8 @@ resource "oci_core_instance" "oracle" {
   }
 
   shape_config {
-    memory_in_gbs = 24
-    ocpus         = 4
+    memory_in_gbs = 12
+    ocpus         = 2
   }
 
   source_details {
@@ -227,7 +227,7 @@ resource "oci_core_public_ip" "this" {
   lifetime       = "RESERVED"
 
   display_name  = oci_core_instance.oracle.display_name
-  private_ip_id = data.oci_core_private_ips.this.private_ips.0.id
+  private_ip_id = one(data.oci_core_private_ips.this.private_ips[*].id)
 }
 
 resource "oci_core_volume_backup_policy" "this" {
